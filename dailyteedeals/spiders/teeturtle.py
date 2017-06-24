@@ -14,7 +14,7 @@ class TeeturtleCommon(ShopifyCollectionSpider):
 
 class TeeturtleDealSpider(TeeturtleCommon):
     name = "teeturtle_deal"
-    fetch_pages = 1
+    collection_limit = 1
     product_limit = 20
 
     def validate(self, loader, product):

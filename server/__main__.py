@@ -1,7 +1,6 @@
 import base64
 from flask import Flask, send_file
 from scrapyd_api import ScrapydAPI
-from utils import gzipped
 
 app = Flask(__name__)
 scrapyd = ScrapydAPI('http://localhost:6800')
@@ -10,11 +9,34 @@ project = 'dailyteedeals'
 
 @app.route("/status/<job_id>")
 def status(job_id):
-    return scrapyd.job_status(project, job_id)
+    """
+    Get the job status for a single job.
+
+    Args:
+      job_id: Job ID
+
+    Returns:
+      'invalid', 'running', 'pending' or 'finished'.
+    """
+    status = scrapyd.job_status(project, job_id)
+    if status == '':
+        status = 'invalid'
+
+    return status
 
 @app.route("/download/<job_id>")
-@gzipped
 def download(job_id):
+    """
+    Download the feed for a single job.
+
+    Args:
+      job_id: Job ID
+
+    Returns:
+      Item feed for job in JSONLines / .jl format.
+      If the job hasn't finished, it will return a 404.
+
+    """
     if scrapyd.job_status(project, job_id) != 'finished':
         return 'Job not finished', 404
 
@@ -25,6 +47,16 @@ def download(job_id):
 
 @app.route("/schedule/<spider>", methods=['POST'])
 def schedule(spider):
+    """
+    Schedule a spider to start scraping.
+
+    Args:
+      spider: The name of the spider
+
+    Returns:
+      Job ID
+
+    """
     return scrapyd.schedule(project, spider)
 
 if __name__ == "__main__":

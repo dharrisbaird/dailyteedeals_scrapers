@@ -4,7 +4,7 @@
 
 # Daily Tee Deals - Scrapers
 
-A collection of spiders for extracting designs from daily tee websites.
+A collection of spiders for extracting designs from daily tee websites, including: [ShirtPunch](https://shirtpunch.com), [Teefury](https://teefury.com), [Yetee](https://yetee.com), [Qwertee](https://qwertee.com) and 40+ other sites.
 
 ## Requirements
 * Docker
@@ -18,8 +18,8 @@ Two services will now be running:
 * Flask on 6900
 
 The Flask service provides the following endpoints for convenience:
-* [GET] /status/<job_id> - Get the status of a job. returns 'running', 'pending', 'finished' or '' for unknown state.
-* [GET] /download/<job_id> - Download the item feed of a job in JsonLines / .jl format.
-* [POST] /schedule/<spider> - Schedule a job with the given spider name, returning a job id.
+* [GET] **/status/<job_id>** - Get the status of a job. returns 'running', 'pending', 'finished' or '' for unknown state.
+* [GET] **/download/<job_id>** - Download the item feed of a job in JsonLines / .jl format.
+* [POST] **/schedule/<spider>** - Schedule a job with the given spider name, returning a job id.
 
 Alternatively, the [scrapyd](https://scrapyd.readthedocs.io/) service can be called directly.

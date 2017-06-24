@@ -5,15 +5,25 @@ from dailyteedeals.item_loaders.product import ProductItemLoader
 
 
 class ShopifyCollectionSpider(scrapy.Spider):
-    STOPWORDS = ['kids', 'onesie', 'poster', 'hoodie']
+    """ Shopify spider which parses product and collection feeds to discover prodducts. 
+    
+    Attributes:
+        shopify_domain (str): 
+        product_limit (Optional[int]): The maximum products to fetch, -1 for unlimited.
+        collection_limit (Optional[int]): Human readable string describing the exception.
+        shuffle_products (Optional[bool]): Whether products should be shuffled.
+    """
+
     COLLECTION_ENDPOINT = 'http://%s/collections/%s/products.json?limit=250&page=%d'
     PRODUCTS_ENDPOINT = 'http://%s/products.json?limit=250&page=%d'
+
+    shopify_domain = None
     product_limit = -1
+    collection_limit = 5
     shuffle_products = False
-    fetch_pages = 5
 
     def __init__(self, *a, **kw):
-        if not hasattr(self, 'shopify_domain'):
+        if self.shopify_domain is None:
             raise NotImplementedError('shopify_domain not defined in spider')
 
         self.allowed_domains = [self.shopify_domain]
@@ -28,7 +38,7 @@ class ShopifyCollectionSpider(scrapy.Spider):
                 yield scrapy.Request(collection_url, callback=self.__parse_products)
         else:
             print "Getting all collections"
-            for page in xrange(self.fetch_pages):
+            for page in xrange(self.collection_limit):
                 collections_url = ShopifyCollectionSpider.PRODUCTS_ENDPOINT % (
                     self.shopify_domain, page)
                 print collections_url
