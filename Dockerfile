@@ -16,6 +16,7 @@ RUN apk --update add $RUNTIME_PACKAGES && \
 
 ADD . /app
 
+# Build the project and deploy it to scrapyd.
 RUN scrapyd & PID=$! && \
    sleep 5 && \
    scrapyd-deploy && \
