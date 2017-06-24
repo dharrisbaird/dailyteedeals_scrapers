@@ -1,0 +1,7 @@
+scrapyd==1.1.0
+furl
+flask
+python-scrapyd-api
+pyrfc3339
+python-dateutil
+commonregex
