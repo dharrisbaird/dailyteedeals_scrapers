@@ -23,7 +23,7 @@ def download(job_id):
     filepath = "../items/%s/%s/%s.jl" % (project, spider, job_id)
     return send_file(filepath, mimetype='application/x-jsonlines')
 
-@app.route("/schedule/<spider>")
+@app.route("/schedule/<spider>", methods=['POST'])
 def schedule(spider):
     return scrapyd.schedule(project, spider)
 
