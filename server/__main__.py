@@ -1,5 +1,5 @@
 import base64
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file
 from scrapyd_api import ScrapydAPI
 from utils import gzipped
 
@@ -26,15 +26,6 @@ def download(job_id):
 @app.route("/schedule/<spider>", methods=['POST'])
 def schedule(spider):
     return scrapyd.schedule(project, spider)
-
-@app.route('/')
-def routes():
-  routes = []
-  for rule in app.url_map.iter_rules():
-    if "GET" in rule.methods:
-      url = rule.rule
-      routes.append(url)
-  return render_template('routes.html', routes=routes)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=6900, processes=20)
