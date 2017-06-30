@@ -45,18 +45,16 @@ def download(job_id):
     filepath = "../items/%s/%s/%s.jl" % (project, spider, job_id)
     return send_file(filepath, mimetype='application/x-jsonlines')
 
-@app.route("/schedule/<spider>", methods=['POST'])
-def schedule(spider):
+@app.route("/schedule", methods=['POST'])
+def schedule():
     """
     Schedule a spider to start scraping.
-
-    Args:
-      spider: The name of the spider
 
     Returns:
       Job ID
 
     """
+    spider = request.form['spider']
     return scrapyd.schedule(project, spider)
 
 if __name__ == "__main__":
