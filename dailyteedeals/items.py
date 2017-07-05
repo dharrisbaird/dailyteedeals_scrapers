@@ -19,4 +19,3 @@ class Product(scrapy.Item):
     expires_at = scrapy.Field(input_processor=ParseDate())
     fabric_colors = scrapy.Field(output_processor=Identity())
     tags = scrapy.Field(output_processor=Identity())
-    stopwords = scrapy.Field()

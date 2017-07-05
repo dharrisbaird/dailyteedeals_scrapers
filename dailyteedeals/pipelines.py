@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 from urlparse import urljoin
+from scrapy.exceptions import DropItem
 
 STOPWORDS = ["gift certificate", "hoodie", "bracelet", "poster",
              "card", "monthly", "infant" "toddler", "youth", "baby",
@@ -20,7 +21,6 @@ class DefaultValuesPipeline(object):
         item.setdefault('deal', spider_type == 'deal')
         item.setdefault('tags', [])
         item.setdefault('fabric_colors', [])
-        item.setdefault('stopwords', [])
         return item
 
 
@@ -33,7 +33,10 @@ class ValidationPipeline(object):
                 item['valid'] = False
 
         words = item['name'].lower().split()
-        item['stopwords'] = set(words).intersection(STOPWORDS)
+
+        foundStopwords = set(words).intersection(STOPWORDS)
+        if foundStopwords:
+            raise DropItem("Stopwords found %s" % ', '.join(foundStopwords))
 
         return item
 
