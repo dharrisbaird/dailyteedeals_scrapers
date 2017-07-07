@@ -5,3 +5,4 @@ python-scrapyd-api
 pyrfc3339
 python-dateutil
 commonregex
+jmespath
