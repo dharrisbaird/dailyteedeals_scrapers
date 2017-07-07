@@ -1,5 +1,7 @@
 deploy.sh
 out.jl
+twistd.pid
+items
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
