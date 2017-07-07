@@ -1,5 +1,5 @@
 import base64
-from flask import Flask, send_file
+from flask import Flask, send_file, request
 from scrapyd_api import ScrapydAPI
 
 app = Flask(__name__)
