@@ -1,7 +1,7 @@
 FROM harrisbaird/scrapyd:py2
 
 ENV BUILD_PACKAGES=build-base \
-    RUNTIME_PACKAGES="libssl1.0 supervisor"
+    RUNTIME_PACKAGES="libssl1.0"
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN apk --update add $RUNTIME_PACKAGES && \
 
 ADD . /app
 
-# Build the project and deploy it to scrapyd.
+# Run scrapyd and deploy project.
 RUN scrapyd & PID=$! && \
    sleep 5 && \
    scrapyd-deploy && \

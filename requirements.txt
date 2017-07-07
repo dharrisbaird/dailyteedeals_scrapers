@@ -6,3 +6,4 @@ pyrfc3339
 python-dateutil
 commonregex
 jmespath
+supervisor
