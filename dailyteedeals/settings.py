@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-
 BOT_NAME = 'dailyteedeals'
 
 SPIDER_MODULES = ['dailyteedeals.spiders']
 NEWSPIDER_MODULE = 'dailyteedeals.spiders'
-
-USER_AGENT = 'DailyTeeDealsBot/2.0 (+https://dailyteedeals.com/bot; support@dailyteedeals.com)'
-
-ROBOTSTXT_OBEY = True
 
 AUTOTHROTTLE_ENABLED = True
 AUTOTHROTTLE_START_DELAY = 1
@@ -22,6 +16,7 @@ ITEM_PIPELINES = {
     'dailyteedeals.pipelines.ValidationPipeline': 2,
     'dailyteedeals.pipelines.NameCleanupPipeline': 3,
     'dailyteedeals.pipelines.AbsoluteURLPipeline': 4,
+    'dailyteedeals.pipelines.ParseMoneyPipeline': 5,
 }
 
 HTTPCACHE_ENABLED = True

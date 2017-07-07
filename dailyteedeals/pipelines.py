@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 import re
 from urlparse import urljoin
 from scrapy.exceptions import DropItem
+from dailyteedeals.utils import Money
 
 STOPWORDS = ["gift certificate", "hoodie", "bracelet", "poster",
              "card", "monthly", "infant" "toddler", "youth", "baby",
@@ -48,9 +48,17 @@ class NameCleanupPipeline(object):
             item['name'] = item['name'].replace(word, '')
         return item
 
+
 class AbsoluteURLPipeline(object):
     def process_item(self, item, spider):
         for field in ['url', 'image_url']:
             if len(spider.start_urls) > 0:
                 item[field] = urljoin(spider.start_urls[0], item[field])
+        return item
+
+
+class ParseMoneyPipeline(object):
+    def process_item(self, item, spider):
+
+        item['prices'] = Money(item['prices'])
         return item

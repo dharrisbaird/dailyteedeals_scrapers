@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import scrapy
 from scrapy.loader.processors import Identity
 from scrapy.loader import ItemLoader
@@ -21,6 +20,7 @@ class Product(scrapy.Item):
     expires_at = scrapy.Field(input_processor=ParseDate())
     fabric_colors = scrapy.Field(output_processor=Identity())
     tags = scrapy.Field(output_processor=Identity())
+
 
 class ProductItemLoader(ItemLoader):
     default_item_class = Product

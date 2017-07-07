@@ -18,9 +18,9 @@ ADD . /app
 
 # Run scrapyd and deploy project.
 RUN scrapyd & PID=$! && \
-   sleep 5 && \
-   scrapyd-deploy && \
-   kill $PID
+  sleep 5 && \
+  scrapyd-deploy && \
+  kill $PID
 
 EXPOSE 6800 6900
 

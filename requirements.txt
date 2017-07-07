@@ -1,4 +1,4 @@
-scrapyd==1.1.0
+scrapyd==1.2.0
 furl
 flask
 python-scrapyd-api
@@ -7,3 +7,6 @@ python-dateutil
 commonregex
 jmespath
 supervisor
+
+# testing
+pytest
