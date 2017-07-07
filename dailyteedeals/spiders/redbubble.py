@@ -6,7 +6,7 @@ from scrapy.loader.processors import MapCompose
 import json
 import jmespath
 from furl import furl
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class RedbubbleFullSpider(scrapy.Spider):

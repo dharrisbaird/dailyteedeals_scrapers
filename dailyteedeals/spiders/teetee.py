@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import scrapy
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class TeeteeCommon(scrapy.Spider):

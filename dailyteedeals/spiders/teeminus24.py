@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urlparse
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class Teeminus24Common(scrapy.Spider):

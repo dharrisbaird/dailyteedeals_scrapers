@@ -2,7 +2,7 @@
 import re
 import scrapy
 import urlparse
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class MymainmanpatSpider(scrapy.Spider):

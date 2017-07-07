@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.loader.processors import Join
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class PamplingSpider(scrapy.Spider):

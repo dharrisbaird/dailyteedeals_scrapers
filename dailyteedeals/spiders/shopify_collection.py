@@ -1,7 +1,7 @@
 import json
 import random
 import scrapy
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class ShopifyCollectionSpider(scrapy.Spider):

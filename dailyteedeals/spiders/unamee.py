@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class UnameeDealSpider(scrapy.Spider):

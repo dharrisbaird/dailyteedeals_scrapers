@@ -5,7 +5,7 @@ import json
 import jmespath
 import scrapy
 from scrapy.loader.processors import Join
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class TeeconomistCommon(scrapy.Spider):

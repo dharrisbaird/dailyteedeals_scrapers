@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.loader.processors import Identity
-from dailyteedeals.item_loaders.processors import ExtractUrls, ParseDate
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import MapCompose, TakeFirst
+from dailyteedeals.processors import ExtractUrls, ParseDate
 
 
 class Product(scrapy.Item):
@@ -19,3 +21,7 @@ class Product(scrapy.Item):
     expires_at = scrapy.Field(input_processor=ParseDate())
     fabric_colors = scrapy.Field(output_processor=Identity())
     tags = scrapy.Field(output_processor=Identity())
+
+class ProductItemLoader(ItemLoader):
+    default_item_class = Product
+    default_output_processor = TakeFirst()

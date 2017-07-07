@@ -2,7 +2,7 @@
 import re
 import urlparse
 import scrapy
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class TeevillainSpider(scrapy.Spider):

@@ -2,7 +2,7 @@ import re
 from scrapy.selector import Selector
 from dailyteedeals.spiders.shopify_collection import ShopifyCollectionSpider
 from dailyteedeals.spiders.shopify_collection import ShopifyCollectionSpider
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class ShirtbattleCommon(ShopifyCollectionSpider):

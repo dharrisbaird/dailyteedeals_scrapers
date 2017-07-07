@@ -3,7 +3,7 @@ import re
 import urlparse
 from scrapy.contrib.spiders import CrawlSpider, Rule, Request
 from scrapy.contrib.linkextractors import LinkExtractor
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class Society6FullSpider(CrawlSpider):

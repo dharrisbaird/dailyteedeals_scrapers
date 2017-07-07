@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import urlparse
 import scrapy
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class OlyfantSpider(scrapy.Spider):

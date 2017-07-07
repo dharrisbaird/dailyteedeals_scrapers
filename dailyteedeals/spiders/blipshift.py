@@ -2,7 +2,7 @@
 import re
 import scrapy
 from dailyteedeals.spiders.shopify_collection import ShopifyCollectionSpider
-from dailyteedeals.item_loaders.product import ProductItemLoader
+from dailyteedeals.items import ProductItemLoader
 
 
 class BlipshiftCommon(ShopifyCollectionSpider):
