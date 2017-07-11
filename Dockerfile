@@ -7,12 +7,11 @@ WORKDIR /app
 
 ADD requirements.txt /app
 
-RUN apk --update add $RUNTIME_PACKAGES && \
+RUN apk --update --no-cache add $RUNTIME_PACKAGES && \
   apk add --virtual build-dependencies $BUILD_PACKAGES && \
   pip uninstall -y scrapyd && \
   pip --no-cache-dir install -r requirements.txt && \
-  apk del build-dependencies && \
-  rm -rf /var/cache/apk/*
+  apk del build-dependencies
 
 ADD . /app
 
