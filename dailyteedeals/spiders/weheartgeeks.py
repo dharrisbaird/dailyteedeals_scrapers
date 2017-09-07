@@ -20,4 +20,5 @@ class WeheartgeeksFullSpider(WeheartgeeksCommon):
 
 class WeheartgeeksDealSpider(WeheartgeeksCommon):
     name = "weheartgeeks_deal"
-    shopify_collections = ['design-of-the-day']
+    product_limit = 4
+    shuffle_products = True

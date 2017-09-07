@@ -19,7 +19,7 @@ class TeeteeCommon(scrapy.Spider):
         loader.add_xpath('artist_name', '//h2[@class="product"]/a/text()')
         loader.add_xpath('artist_urls', '//div[@data-show-all-content]//a/@href')
         loader.add_value('prices', prices[0] + u' €')
-        loader.add_value('last_chance', response.url == 'http://www.teetee.eu/en/overtime')
+        loader.add_value('last_chance', 'overtime' in response.url)
         loader.add_xpath('expires_at', 'string(//body)', re=(r'EXPIRE_DATE = "(.*?)";'))
 
         return loader.load_item()

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import scrapy
+import random
 from dailyteedeals.items import ProductItemLoader
 
 
@@ -12,16 +13,12 @@ class DesignbyhumansCommon(scrapy.Spider):
 
         style = response.xpath(
             '//label[@class="color-label selected"]//span/@style').extract_first()
-        color = re.match(r'background-color:#(.+)', style).group(1)
-        image_url = response.xpath('//meta[@property="og:image"]/@content').extract_first()
-        image_url = re.sub(r'[a-f0-9]{6}\.jpg$', color + '.jpg', image_url)
-        image_url = re.sub(r'-\d+x\d+-', '-1200x1200-', image_url)
 
         artist_name = response.xpath('//span[@class="name"]/text()').extract_first()
 
         loader.add_xpath('name', '//h1[@id="product-title"]/text()')
         loader.add_value('url', response.url)
-        loader.add_value('image_url', image_url)
+        loader.add_xpath('image_url', '//meta[@property="og:image"]/@content')
         loader.add_xpath('prices', '//span[@id="product_price"]/text()')
         loader.add_value('artist_name', artist_name)
         loader.add_value('artist_urls', 'https://www.designbyhumans.com/shop/' + artist_name)
@@ -30,10 +27,13 @@ class DesignbyhumansCommon(scrapy.Spider):
 
 class DesignbyhumansDealSpider(DesignbyhumansCommon):
     name = "designbyhumans_deal"
-    start_urls = ['https://www.designbyhumans.com/shirt-of-the-day/']
+    start_urls = ['https://www.designbyhumans.com/shop/pop-culture-mens-t-shirts/']
 
     def parse(self, response):
-        return self.parse_product_page(response)
+        product_urls = response.xpath('//a[contains(@class, "listing-trigger")]/@href').extract()
+        random.shuffle(product_urls)
+        for product_url in product_urls[:4]:
+            yield scrapy.Request(product_url, callback=self.parse_product_page)
 
 
 class DesignbyhumansFullSpider(DesignbyhumansCommon):
