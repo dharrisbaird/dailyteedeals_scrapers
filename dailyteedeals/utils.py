@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import re
 
+CURRENCIES = {
+    'usd': re.compile(u'\$|usd|dollar', re.IGNORECASE),
+    'gbp': re.compile(u'£|gbp|pound', re.IGNORECASE),
+    'eur': re.compile(u'€|euro?|\xe2\x82\xac', re.IGNORECASE)
+}
+
 
 class Money(dict):
     """A very naive money parser."""
-
-    CURRENCIES = {
-        'usd': [u'$', 'usd'],
-        'gbp': [u'£', 'gbp'],
-        'eur': [u'€', 'eur']
-    }
 
     def __init__(self, collection):
         if isinstance(collection, basestring):
@@ -18,12 +18,19 @@ class Money(dict):
         dict.__init__(self, filter(None, output))
 
     def _parse_string(self, moneyStr):
-        moneyStr = moneyStr.decode('utf-8')
-        currency = next((k for k, v in self.CURRENCIES.items()
-                         for match in v if match in moneyStr.lower()), 'usd')
+        currency = self._find_currency(moneyStr)
+
         result = re.search(r"(\d+(?:\.\d{1,2})?)", moneyStr)
         if not result:
             return
         cents = float(result.groups()[0]) * 100
         if cents > 0:
             return currency, int(cents)
+
+    def _find_currency(self, moneyStr):
+        for currency, pattern in CURRENCIES.items():
+            if pattern.search(moneyStr) is not None:
+                return currency
+        
+        # Default to usd
+        return 'usd'
