@@ -14,13 +14,14 @@ class ShopifyCollectionSpider(scrapy.Spider):
         shuffle_products (Optional[bool]): Whether products should be shuffled.
     """
 
-    COLLECTION_ENDPOINT = 'http://%s/collections/%s/products.json?limit=250&page=%d'
+    COLLECTION_ENDPOINT = 'http://%s/collections/%s/products.json?limit=50&page=%d'
     PRODUCTS_ENDPOINT = 'http://%s/products.json?limit=250&page=%d'
 
     shopify_domain = None
     product_limit = -1
-    collection_limit = 5
+    collection_limit = 10
     shuffle_products = False
+    shopify_collections = []
 
     def __init__(self, *a, **kw):
         if self.shopify_domain is None:
@@ -30,17 +31,15 @@ class ShopifyCollectionSpider(scrapy.Spider):
         super(ShopifyCollectionSpider, self).__init__(*a, **kw)
 
     def start_requests(self):
-        if hasattr(self, 'shopify_collections'):
+        if self.shopify_collections:
             for slug in self.shopify_collections:
                 print "Getting collection: " + slug
-                collection_url = ShopifyCollectionSpider.COLLECTION_ENDPOINT % (
-                    self.shopify_domain, slug, 1)
+                collection_url = ShopifyCollectionSpider.COLLECTION_ENDPOINT % (self.shopify_domain, slug, 1)
                 yield scrapy.Request(collection_url, callback=self.__parse_products)
         else:
             print "Getting all collections"
             for page in xrange(self.collection_limit):
-                collections_url = ShopifyCollectionSpider.PRODUCTS_ENDPOINT % (
-                    self.shopify_domain, page)
+                collections_url = ShopifyCollectionSpider.PRODUCTS_ENDPOINT % (self.shopify_domain, page)
                 print collections_url
                 yield scrapy.Request(collections_url, callback=self.__parse_products)
 
