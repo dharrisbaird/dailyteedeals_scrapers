@@ -1,23 +1,13 @@
 # -*- coding: utf-8 -*-
-import re
 import random
 import urlparse
-from scrapy.contrib.spiders import CrawlSpider, Rule, Request
-from scrapy.contrib.linkextractors import LinkExtractor
+from scrapy.spiders import Spider, CrawlSpider, Rule, Request
+from scrapy.linkextractors import LinkExtractor
 from dailyteedeals.items import ProductItemLoader
 
 
-class TeepublicFullSpider(CrawlSpider):
-    name = "teepublic_full"
-    allowed_domains = ["www.teepublic.com"]
-    start_urls = ['https://www.teepublic.com/t-shirts/pop-culture']
-
-    rules = (
-        Rule(LinkExtractor(restrict_xpaths=(
-            '//a[@rel="next" and not(contains(@href, "page=100"))]')), follow=True),
-        Rule(LinkExtractor(allow=('^https://www.teepublic.com/t-shirt/\\d+')),
-             callback='parse_product_page'),
-    )
+class TeepublicCommon(Spider):
+    allowed_domains = ["teepublic.com"]
 
     def parse_product_page(self, response):
         loader = ProductItemLoader(response=response)
@@ -36,3 +26,25 @@ class TeepublicFullSpider(CrawlSpider):
         loader.add_value('artist_urls', 'https://www.teepublic.com' + artist_url)
         loader.add_xpath('tags', '//div[contains(@class, "tags")]/a/text()')
         return loader.load_item()
+
+class TeepublicDealSpider(TeepublicCommon):
+    name = "teepublic_deal"
+    start_urls = ['https://www.teepublic.com/t-shirts?canvas_subclass=classic-t-shirt&gender=mens&page=1&sort=newest']
+
+    def parse(self, response):
+        product_urls = response.xpath('//span[@class="sale-count-down"]/ancestor::div[contains(@class, "design-container")]//a[contains(@class, "mockup")]/@href').extract()
+        random.shuffle(product_urls)
+        for product_url in product_urls[:4]:
+            yield Request(urlparse.urljoin(response.url, product_url), callback=self.parse_product_page)
+
+
+class TeepublicFullSpider(TeepublicCommon, CrawlSpider):
+    name = "teepublic_full"
+    start_urls = ['https://www.teepublic.com/t-shirts/pop-culture']
+
+    rules = (
+        Rule(LinkExtractor(restrict_xpaths=(
+            '//a[@rel="next" and not(contains(@href, "page=100"))]')), follow=True),
+        Rule(LinkExtractor(allow=('^https://www.teepublic.com/t-shirt/\\d+')),
+             callback='parse_product_page'),
+    )
