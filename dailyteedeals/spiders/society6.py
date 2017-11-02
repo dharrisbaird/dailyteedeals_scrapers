@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 import urlparse
-from scrapy.contrib.spiders import CrawlSpider, Rule, Request
-from scrapy.contrib.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule, Request
+from scrapy.linkextractors import LinkExtractor
 from dailyteedeals.items import ProductItemLoader
 
 
