@@ -3,9 +3,16 @@
 [![Docker Build Statu](https://img.shields.io/docker/build/harrisbaird/dailyteedeals_scrapers.svg)](https://hub.docker.com/r/harrisbaird/dailyteedeals_scrapers/)
 [![](https://images.microbadger.com/badges/image/harrisbaird/dailyteedeals_scrapers.svg)](https://microbadger.com/images/harrisbaird/dailyteedeals_scrapers "Get your own image badge on microbadger.com")
 
-# Daily Tee Deals - Scrapers
+# Scrapers for Daily Tee Deals
 
 A collection of [Scrapy](https://scrapy.org) spiders for extracting designs from daily tee websites, including: [ShirtPunch](https://shirtpunch.com), [Teefury](https://teefury.com), [Yetee](https://yetee.com), [Qwertee](https://qwertee.com) and 40+ other sites.
+
+---
+**NOTE**
+
+This hasn't been updated in quite a while and some spiders may no longer work.
+
+---
 
 ## Running
 
